@@ -61,6 +61,10 @@ class CytotoxicityAssay(object):
             return list_drugs
         return [drug for drug in list_drugs if drug not in self.list_of_controls()]
 
+    def list_of_wlengths(self):
+        wlengths = self.__data.loc['Длина волны'].unique().tolist()
+        return wlengths
+
     def substract_background(self, wlength, wlength_to_subst):
         """ Substruct background absorption if it was measured.
         :param wlength: int, the wavelength of MTS/MTT reagent absorbtion
@@ -199,4 +203,4 @@ if __name__ == '__main__':
     print(df.list_of_drugs(include_controls=True))
     print(df.list_of_controls())
 
-    print(CytotoxicityAssay.substract_background.__doc__)
+    print(df.get_data())
