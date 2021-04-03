@@ -62,6 +62,11 @@ class CytotoxicityAssay(object):
         return [drug for drug in list_drugs if drug not in self.list_of_controls()]
 
     def substract_background(self, wlength, wlength_to_subst):
+        """ Substruct background absorption if it was measured.
+        :param wlength: int, the wavelength of MTS/MTT reagent absorbtion
+        :param wlength_to_subst: int, the background wavelength
+        :return: None
+        """
         background = self.__data.loc[self.__data['Длина волны'] == wlength_to_subst, "Погл."]
         background.reset_index(drop=True, inplace=True)
 
