@@ -73,6 +73,10 @@ class CytotoxicityAssay(object):
         :param wlength_to_subst: int, the background wavelength
         :return: None
         """
+        list_of_wlengths = self.list_of_wlengths()
+        if (wlength not in list_of_wlengths) or (wlength_to_subst no in list_of_wlengths):
+            raise ValueError('Check the values of wavlengths on data!')
+
         background = self.__data.loc[self.__data['Длина волны'] == wlength_to_subst, "Погл."]
         background.reset_index(drop=True, inplace=True)
 
@@ -203,6 +207,9 @@ if __name__ == '__main__':
     df.read_data(path_to_file)
 
 # Information about dataset
-    print(df.list_of_drugs(include_controls=True))
-    print(df.list_of_controls())
-    print(df.list_of_wlengths())
+#     print(df.list_of_drugs(include_controls=True))
+#     print(df.list_of_controls())
+#     print(df.list_of_wlengths())
+
+    li = [1, 2, 3]
+    print(0 in li)
