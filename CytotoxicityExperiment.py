@@ -112,9 +112,8 @@ class CytotoxicityAssay(object):
         # Checking
         drugs_in_data = set(self.list_of_drugs(include_controls=False))
         drugs_from_arg = set(drugs_dict.keys())
-        difference = drugs_in_data ^ drugs_from_arg
-        if difference:
-            raise ValueError(f'Check the input for the following drugs: {difference}')
+        if drugs_in_data ^ drugs_from_arg:
+            raise ValueError(f'The drug set must be equal to the keys in drugs_dict!')
 
         self.__data['Концентрация'] = 0  # add new column
 
@@ -222,7 +221,7 @@ if __name__ == '__main__':
 
     # Add concentration
     df.add_concentration(axis='vertical', n_of_steps=8,
-                         drugs_dict={"MS-1": [100, 3], "MS-2": [100, 10]},
+                         drugs_dict={"MS-1": [100, 3]},
                          log_scale=True)
 
-    #print(df.get_data().tail())
+    print(df.get_data().tail())
