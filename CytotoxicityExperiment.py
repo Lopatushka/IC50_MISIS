@@ -43,13 +43,12 @@ class CytotoxicityAssay(object):
     def list_of_controls(self):
         """Return list of contols whose type is 'Контр. образец'
         """
-        if hasattr(self, '__data'):
-            if 'Контр. образец' not in self.__data['Тип'].unique():
-                return
-            else:
-                controls = self.__data.loc[self.__data['Тип'] == 'Контр. образец', 'Образец'].apply(
-                    lambda x: x.split('_')[0]).unique().tolist()
-                return controls
+        if 'Контр. образец' not in self.__data['Тип'].unique():
+            return
+        else:
+            controls = self.__data.loc[self.__data['Тип'] == 'Контр. образец', 'Образец'].apply(
+                lambda x: x.split('_')[0]).unique().tolist()
+            return controls
 
     def list_of_drugs(self, include_controls=True):
         if hasattr(self, '__data'):
