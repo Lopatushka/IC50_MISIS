@@ -62,6 +62,8 @@ class CytotoxicityAssay(object):
         return [drug for drug in list_drugs if drug not in self.list_of_controls()]
 
     def list_of_wlengths(self):
+        """Return a list of wavelengths.
+        """
         wlengths = self.__data['Длина волны'].unique().tolist()
         return wlengths
 
@@ -200,7 +202,7 @@ if __name__ == '__main__':
     df = CytotoxicityAssay()
     df.read_data(path_to_file)
 
-    # print(df.list_of_drugs(include_controls=True))
-    # print(df.list_of_controls())
-
+# Information about dataset
+    print(df.list_of_drugs(include_controls=True))
+    print(df.list_of_controls())
     print(df.list_of_wlengths())
