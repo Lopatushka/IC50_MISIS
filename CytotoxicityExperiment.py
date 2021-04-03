@@ -117,6 +117,13 @@ class CytotoxicityAssay(object):
         if drugs_in_data ^ drugs_from_arg:
             raise ValueError(f'The drug set must be equal to the keys in drugs_dict!')
 
+        f = lambda x: isinstance(x, int)
+        for li in drugs_dict.values():
+            if len(li) == 2:
+                if sum(map(f, li)) == 2:
+                    continue
+            raise ValueError('Incorrect drugs_dict values!')
+
         self.__data['Концентрация'] = 0  # add new column
 
         if axis == 'vertical':
