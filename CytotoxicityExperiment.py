@@ -85,7 +85,7 @@ class CytotoxicityAssay(object):
 
         self.__data['Образец'] = self.__data['Образец'].apply(lambda x: x.split('_')[0])  # rename drugs
 
-        #       Checking
+        # Checking
         drugs_in_table = self.__data.loc[self.__data['Тип'] != 'Контр. образец', 'Образец'].unique()
         for drug in drugs_in_table:
             if drug not in drugs_dict:
@@ -186,4 +186,6 @@ if __name__ == '__main__':
     df = CytotoxicityAssay()
     df.read_data(path_to_file)
 
-    print(df.get_data())
+    #print(df.get_data())
+    print(df.list_of_drugs(include_controls=True))
+    print(df.list_of_controls())
