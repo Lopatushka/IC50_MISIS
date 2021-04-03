@@ -87,11 +87,12 @@ class CytotoxicityAssay(object):
 
     def add_concentration(self, axis='vertical', n_of_steps=8,
                           drugs_dict={}, log_scale=True):
-        """
-        Example of input:
-        # Name, start concentration, dilution step
-            di = {'MS-1': [100, 3],
-                 'MS-2' : [40, 4]}
+        """Add concentration column 'Концентрация' to dataset.
+        :param axis: str {'vertical','horisontal'}, the mode of drug addition
+        :param n_of_steps: int, the number of concentations for each drug
+        :param drugs_dict: dict, {drug name: [start concentation, diltion step]}
+        :param log_scale: bool, if True, make apply log10 to concentration values
+        :return: None
         """
 
         def create_concentration(start, step, n, result=None):
