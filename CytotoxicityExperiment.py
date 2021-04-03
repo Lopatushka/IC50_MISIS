@@ -1,6 +1,7 @@
 import pandas as pd
 from math import log
 
+
 class CytotoxicityAssay(object):
     """A cytotoxicity essay.
 
@@ -88,9 +89,9 @@ class CytotoxicityAssay(object):
     def add_concentration(self, axis='vertical', n_of_steps=8,
                           drugs_dict=None, log_scale=True):
         """Add concentration column 'Концентрация' to dataset.
-        :param axis: str {'vertical','horisontal'}, the mode of drug addition
-        :param n_of_steps: int, the number of concentations for each drug
-        :param drugs_dict: dict, {drug name: [start concentation, diltion step]}
+        :param axis: str {'vertical','horizontal'}, the mode of drug addition
+        :param n_of_steps: int, the number of concentrations of each drug
+        :param drugs_dict: dict, {drug name: [start concentration, dilution step]}
         :param log_scale: bool, if True, make apply log10 to concentration values
         :return: None
         :raise: ValueError if drugs_dict.keys() and unique drugs are not equal
@@ -111,7 +112,7 @@ class CytotoxicityAssay(object):
         # Rename drugs
         self.__data['Образец'] = self.__data['Образец'].apply(lambda x: x.split('_')[0])
 
-        # Checking
+        # Checking drugs_dict input
         drugs_in_data = set(self.list_of_drugs(include_controls=False))
         drugs_from_arg = set(drugs_dict.keys())
         if drugs_in_data ^ drugs_from_arg:
@@ -136,15 +137,17 @@ class CytotoxicityAssay(object):
                 concentrations = concentrations * replicates
                 self.__data.loc[self.__data['Образец'] == key, 'Концентрация'] = concentrations
 
-        elif axis == 'horisontal':
+        elif axis == 'horizontal':  # todo add 'horizontal' part in add_concentration()
             pass
 
-    def normalization(self, control_dict={}, axis='vertical', n_of_steps=8):
+    def normalization(self, control_dict=None, axis='vertical', n_of_steps=8):
+        """Normalize data to controls values.
+        :param control_dict: dict, {drug name : control name}
+        :param axis: str, {'vertical', 'horizontal'}, the mode of drug adding
+        :param n_of_steps: int, the number of concentrations of each drug
+        :return: None
         """
-        Example of control_dict:
-        normalization_dict = {'MS-1': 'DMSO', 'MS-2': 'DMSO'}
-        """
-        if control_dict == {}:
+        if not control_dict:
             # Use Контр. образец for all drugs
             if 'Контр. образец' not in self.__data['Тип'].unique():
                 raise ValueError('There is no Control samples for normalization!')
@@ -157,7 +160,7 @@ class CytotoxicityAssay(object):
                 else:
                     control_dict = {drug: controls[0] for drug in self.list_of_drugs() if drug != controls}
 
-        # Cheking that Контр. образец and drugs are in table...
+        # Checking that Контр. образец and drugs are in table...
 
         self.__data['Погл. нормализ.'] = 0  # add new column
 
@@ -175,7 +178,7 @@ class CytotoxicityAssay(object):
                 self.__data.loc[self.__data['Образец'] == drug, 'Погл. нормализ.'] = 100 * self.__data.loc[
                     self.__data['Образец'] == drug, 'Погл.'] / to_normalize
 
-        elif axis == 'horizontal':
+        elif axis == 'horizontal': # todo add 'horizontal' part for normalization
             pass
 
     def drop_control(self, control_names=[]):
@@ -230,7 +233,7 @@ if __name__ == '__main__':
 
     # Add concentration
     df.add_concentration(axis='vertical', n_of_steps=8,
-                         drugs_dict={"MS-1": [100, 3]},
+                         drugs_dict={"MS-1": [100, 3], "MS-2": [100, 3]},
                          log_scale=True)
 
     print(df.get_data().tail())
