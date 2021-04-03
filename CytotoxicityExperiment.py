@@ -111,14 +111,10 @@ class CytotoxicityAssay(object):
 
         # Checking
         drugs_in_data = set(self.list_of_drugs(include_controls=False))
-        drugs_from_arg = set(drug_dict.keys())
+        drugs_from_arg = set(drugs_dict.keys())
         difference = drugs_in_data ^ drugs_from_arg
         if difference:
             raise ValueError(f'Check the input for the following drugs: {difference}')
-
-        for drug in drugs_in_table:
-            if drug not in drugs_dict:
-                raise ValueError(f"{drug} isn't in the dictionary!")
 
         self.__data['Концентрация'] = 0  # add new column
 
