@@ -2,7 +2,7 @@ import pandas as pd
 from math import log
 
 class CytotoxicityAssay(object):
-    """A cytocoxicity essay.
+    """A cytotoxicity essay.
 
     Attributes:
         __data: Pandas.DataFrame
@@ -16,8 +16,8 @@ class CytotoxicityAssay(object):
     def read_data(self, path):
         """Read data from .xlsx file
 
-        :param path:
-        :return:
+        :param path: str, path to .xlsx file
+        :return: None
         """
         data = pd.read_excel(path, header=None)
         data.columns = data.iloc[2]
@@ -31,14 +31,22 @@ class CytotoxicityAssay(object):
         self.__data = data
 
     def get_data(self):
+        """Get pandas.DataFrame with data
+
+        :return: pandas.DataFrame
+        """
         if hasattr(self, '__data'):
             return self.__data
 
     def get_exp_name(self):
+        """Return experiment_name
+        """
         if hasattr(self, '_experiment_name'):
             return self.__experiment_name
 
     def list_of_controls(self):
+        """Return list of contols whose type is 'Контр. образец'
+        """
         if hasattr(self, '__data'):
             if 'Контр. образец' not in self.__data['Тип'].unique():
                 return
