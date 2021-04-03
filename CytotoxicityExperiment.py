@@ -1,6 +1,7 @@
 import pandas as pd
 from math import log
 
+
 class CytotoxicityAssay(object):
     """A cytotoxicity essay.
 
@@ -201,15 +202,24 @@ class CytotoxicityAssay(object):
 
         return pd.concat(frames, axis=1, keys=drugs)
 
+
 if __name__ == '__main__':
     path_to_file = 'C:/Users/acer/Desktop/Work/test_data.xls'
 
     df = CytotoxicityAssay()
     df.read_data(path_to_file)
 
-# Information about dataset
+    # Information about dataset
     print(df.list_of_drugs(include_controls=True))
     print(df.list_of_controls())
     print(df.list_of_wlengths())
 
-    df.substract_background(450, 700)
+    # Substract background
+    # df.substract_background(450, 700)
+
+    # Add concentration
+    df.add_concentration(axis='vertical', n_of_steps=8,
+                         drugs_dict={"MS-1": [100, 3], "MS-2": [100, 10]},
+                         log_scale=True)
+
+    #print(df.get_data().tail())
