@@ -51,11 +51,10 @@ class CytotoxicityAssay(object):
             return controls
 
     def list_of_drugs(self, include_controls=True):
-        if hasattr(self, '__data'):
-            list_drugs = self.__data['Образец'].apply(lambda x: x.split('_')[0]).unique().tolist()
-            if include_controls:
-                return list_drugs
-            return [drug for drug in list_drugs if drug not in self.list_of_controls()]
+        list_drugs = self.__data['Образец'].apply(lambda x: x.split('_')[0]).unique().tolist()
+        if include_controls:
+            return list_drugs
+        return [drug for drug in list_drugs if drug not in self.list_of_controls()]
 
     def substract_background(self, wlength, wlength_to_subst):
         background = self.__data.loc[self.__data['Длина волны'] == wlength_to_subst, "Погл."]
