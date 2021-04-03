@@ -38,8 +38,7 @@ class CytotoxicityAssay(object):
     def get_exp_name(self):
         """Return experiment_name
         """
-        if hasattr(self, '_experiment_name'):
-            return self.__experiment_name
+        return self.__experiment_name
 
     def list_of_controls(self):
         """Return list of contols whose type is 'Контр. образец'
