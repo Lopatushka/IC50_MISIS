@@ -94,6 +94,7 @@ class CytotoxicityAssay(object):
         :param drugs_dict: dict, {drug name: [start concentation, diltion step]}
         :param log_scale: bool, if True, make apply log10 to concentration values
         :return: None
+        :raise: ValueError
         """
 
         def create_concentration(start, step, n, result=None):
@@ -105,13 +106,19 @@ class CytotoxicityAssay(object):
             create_concentration(start / step, step, n - 1, result)
             return result
 
-        self.__data['Образец'] = self.__data['Образец'].apply(lambda x: x.split('_')[0])  # rename drugs
+        # Rename drugs
+        self.__data['Образец'] = self.__data['Образец'].apply(lambda x: x.split('_')[0])
 
         # Checking
-        drugs_in_table = self.__data.loc[self.__data['Тип'] != 'Контр. образец', 'Образец'].unique()
+        drugs_in_data = set(self.list_of_drugs(include_controls=False))
+        drugs_from_arg = set(drug_dict.keys())
+        difference = drugs_in_data ^ drugs_from_arg
+        if difference:
+            raise ValueError(f'Check the input for the following drugs: {difference}')
+
         for drug in drugs_in_table:
             if drug not in drugs_dict:
-                raise IndexError(f"{drug} isn't in the dictionary!")
+                raise ValueError(f"{drug} isn't in the dictionary!")
 
         self.__data['Концентрация'] = 0  # add new column
 
