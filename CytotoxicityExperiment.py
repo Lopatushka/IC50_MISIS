@@ -196,6 +196,7 @@ if __name__ == '__main__':
     df = CytotoxicityAssay()
     df.read_data(path_to_file)
 
-    #print(df.get_data())
     print(df.list_of_drugs(include_controls=True))
     print(df.list_of_controls())
+
+    print(CytotoxicityAssay.substract_background.__doc__)
