@@ -185,3 +185,9 @@ class CytotoxicityAssay(object):
             frames.append(self.subset(drug, n_of_steps=n_of_steps).drop('Название', axis=1))
 
         return pd.concat(frames, axis=1, keys=drugs)
+
+if __name__ == '__main__':
+    path_to_file = 'C:/Users/acer/Desktop/Work/test_data.xls'
+    exp = CytotoxicityAssay()
+
+    exp.read_data(path_to_file)
