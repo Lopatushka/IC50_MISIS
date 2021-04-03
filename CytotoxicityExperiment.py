@@ -32,11 +32,8 @@ class CytotoxicityAssay(object):
 
     def get_data(self):
         """Get pandas.DataFrame with data
-
-        :return: pandas.DataFrame
         """
-        if hasattr(self, '__data'):
-            return self.__data
+        return self.__data
 
     def get_exp_name(self):
         """Return experiment_name
@@ -188,6 +185,8 @@ class CytotoxicityAssay(object):
 
 if __name__ == '__main__':
     path_to_file = 'C:/Users/acer/Desktop/Work/test_data.xls'
-    exp = CytotoxicityAssay()
 
-    exp.read_data(path_to_file)
+    df = CytotoxicityAssay()
+    df.read_data(path_to_file)
+
+    print(df.get_data())
