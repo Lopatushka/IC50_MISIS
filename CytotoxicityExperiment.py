@@ -1,7 +1,6 @@
 import pandas as pd
 from math import log
 
-
 class CytotoxicityAssay(object):
     """A cytotoxicity essay.
 
@@ -87,15 +86,18 @@ class CytotoxicityAssay(object):
         self.__data["Погл."] = self.__data["Погл."] - background
 
     def add_concentration(self, axis='vertical', n_of_steps=8,
-                          drugs_dict={}, log_scale=True):
+                          drugs_dict=None, log_scale=True):
         """Add concentration column 'Концентрация' to dataset.
         :param axis: str {'vertical','horisontal'}, the mode of drug addition
         :param n_of_steps: int, the number of concentations for each drug
         :param drugs_dict: dict, {drug name: [start concentation, diltion step]}
         :param log_scale: bool, if True, make apply log10 to concentration values
         :return: None
-        :raise: ValueError
+        :raise: ValueError if drugs_dict.keys() and unique drugs are not equal
         """
+
+        if drugs_dict is None:
+            drugs_dict = {}
 
         def create_concentration(start, step, n, result=None):
             if result is None:
