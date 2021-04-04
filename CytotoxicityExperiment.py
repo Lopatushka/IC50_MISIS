@@ -140,7 +140,7 @@ class CytotoxicityAssay(object):
         elif axis == 'horizontal':  # todo add 'horizontal' part in add_concentration()
             pass
 
-    def normalization(self, control_dict=None, axis='vertical', n_of_steps=8):
+    def normalization(self, control_dict=None, axis='vertical', n_of_steps=8, digits=None):
         """Normalize data to controls values. Add 'Погл. нормализ.' column.
         :param control_dict: dict, {drug name : control name}
         :param axis: str, {'vertical', 'horizontal'}, the mode of drug adding
@@ -160,7 +160,7 @@ class CytotoxicityAssay(object):
                 else:
                     control_dict = {drug: controls[0] for drug in self.list_of_drugs() if drug != controls}
 
-        # Checking that Контр. образец and drugs are in table
+        # Checking that 'Контр. образец' and drugs are in table
         list_of_drugs = set(self.list_of_drugs())
         drugs_from_dict = set(control_dict.keys())
         controls_from_dict = set(control_dict.values())
@@ -185,6 +185,9 @@ class CytotoxicityAssay(object):
 
         elif axis == 'horizontal': # todo add 'horizontal' part for normalization
             pass
+
+        if isinstance(round, int):
+            self.__data['Погл. нормализ.'] = self.__data['Погл. нормализ.'].apply(lambda x: round(x, digits))
 
     def drop_control(self, control_names=[]):
         if not control_names:
@@ -242,6 +245,6 @@ if __name__ == '__main__':
                          log_scale=True)
 
     # Normalization to controls
-    df.normalization(control_dict={'MS-1':'DMSO', 'MS-2':'DMSO'})
+    df.normalization(control_dict={})
 
     print(df.get_data().tail())
