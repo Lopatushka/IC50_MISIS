@@ -48,7 +48,7 @@ class CytotoxicityAssay(object):
         :return: None
         """
         mask = self.__data[colname].apply(lambda x: x not in to_delete)
-        return self.__data[mask]
+        self.__data = self.__data[mask]
 
     def list_of_controls(self):
         """Return list of controls whose type is 'Контр. образец'
