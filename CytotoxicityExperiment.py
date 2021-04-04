@@ -54,7 +54,7 @@ class CytotoxicityAssay(object):
         """Return list of controls whose type is 'Контр. образец'
         """
         if 'Контр. образец' not in self.__data['Тип'].unique():
-            return
+            return []
         else:
             controls = self.__data.loc[self.__data['Тип'] == 'Контр. образец', 'Образец'].apply(
                 lambda x: x.split('_')[0]).unique().tolist()
@@ -62,7 +62,6 @@ class CytotoxicityAssay(object):
 
     def list_of_drugs(self, include_controls=True):
         """Return list of drugs.
-
         :param include_controls: bool, if True, include controls
         :return: list
         """
