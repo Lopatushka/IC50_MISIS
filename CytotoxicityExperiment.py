@@ -160,7 +160,12 @@ class CytotoxicityAssay(object):
                 else:
                     control_dict = {drug: controls[0] for drug in self.list_of_drugs() if drug != controls}
 
-        # Checking that Контр. образец and drugs are in table...
+        # Checking that Контр. образец and drugs are in table
+        list_of_drugs = set(self.list_of_drugs())
+        drugs_from_dict = set(control_dict.keys())
+        controls_from_dict = set(control_dict.values())
+        if (drugs_from_dict | controls_from_dict) ^ list_of_drugs:
+            raise ValueError('Incorrect control_dict value!')
 
         self.__data['Погл. нормализ.'] = 0  # add new column
 
