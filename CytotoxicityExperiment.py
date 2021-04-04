@@ -272,7 +272,10 @@ if __name__ == '__main__':
 
     # Reshape
     results = df.reshape()
-    print(results)
+    #print(results)
+
+    # Export to excel
+    results.to_excel('C:/Users/acer/Desktop/Work/test_results.xls')
 
     # print(df.get_data().head(3))
     # print(df.get_data().tail(3))
