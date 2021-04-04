@@ -186,7 +186,7 @@ class CytotoxicityAssay(object):
         elif axis == 'horizontal': # todo add 'horizontal' part for normalization
             pass
 
-        if isinstance(round, int):
+        if isinstance(digits, int):
             self.__data['Погл. нормализ.'] = self.__data['Погл. нормализ.'].apply(lambda x: round(x, digits))
 
     def drop_control(self, control_names=[]):
@@ -245,6 +245,6 @@ if __name__ == '__main__':
                          log_scale=True)
 
     # Normalization to controls
-    df.normalization(control_dict={})
+    df.normalization(control_dict={}, digits=3)
 
     print(df.get_data().tail())
