@@ -145,6 +145,7 @@ class CytotoxicityAssay(object):
         :param control_dict: dict, {drug name : control name}
         :param axis: str, {'vertical', 'horizontal'}, the mode of drug adding
         :param n_of_steps: int, the number of concentrations of each drug
+        :param digits: int, number of digits after decimal. If None, no rounding
         :return: None
         """
         if not control_dict:
