@@ -141,7 +141,7 @@ class CytotoxicityAssay(object):
             pass
 
     def normalization(self, control_dict=None, axis='vertical', n_of_steps=8):
-        """Normalize data to controls values.
+        """Normalize data to controls values. Add 'Погл. нормализ.' column.
         :param control_dict: dict, {drug name : control name}
         :param axis: str, {'vertical', 'horizontal'}, the mode of drug adding
         :param n_of_steps: int, the number of concentrations of each drug
@@ -223,15 +223,15 @@ class CytotoxicityAssay(object):
 
 
 if __name__ == '__main__':
+    # Create class object, dowload data from .xlsx file
     path_to_file = 'C:/Users/acer/Desktop/Work/test_data.xls'
-
     df = CytotoxicityAssay()
     df.read_data(path_to_file)
 
     # Information about dataset
-    print(df.list_of_drugs(include_controls=True))
-    print(df.list_of_controls())
-    print(df.list_of_wlengths())
+    print('All drugs:', df.list_of_drugs(include_controls=True))
+    print('Control drugs:', df.list_of_controls())
+    print('Wavelengths:', df.list_of_wlengths())
 
     # Substract background
     # df.substract_background(450, 700)
@@ -240,5 +240,8 @@ if __name__ == '__main__':
     df.add_concentration(axis='vertical', n_of_steps=8,
                          drugs_dict={"MS-1": [100, 3], "MS-2": [100, 3]},
                          log_scale=True)
+
+    # Normalization to controls
+    df.normalization(control_dict={'MS-1':'DMSO', 'MS-2':'DMSO'})
 
     print(df.get_data().tail())
