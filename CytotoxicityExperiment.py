@@ -44,7 +44,7 @@ class CytotoxicityAssay(object):
     def delete_rows(self, colname=None, to_delete=None):
         """Delete rows.
         :param colname: str, name of interesting column
-        :param to_delete: list, position needed to delete
+        :param to_delete: list, values in interesting columns needed to delete
         :return: None
         """
         mask = self.__data[colname].apply(lambda x: x not in to_delete)
