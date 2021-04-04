@@ -247,6 +247,11 @@ class CytotoxicityAssay(object):
 
         return pd.concat(frames, axis=1, keys=drugs)
 
+class CytotoxicityExperiment(object):
+    def __init__(self):
+        pass
+
+
 
 if __name__ == '__main__':
     # Create class object, dowload data from .xlsx file
