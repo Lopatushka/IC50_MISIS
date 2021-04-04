@@ -223,7 +223,12 @@ class CytotoxicityAssay(object):
 
         return subset
 
-    def reshape(self, drugs=[], n_of_steps=8):
+    def reshape(self, drugs=None, n_of_steps=8):
+        """Reshape dataframe for GraphPad Prism program
+        :param drugs: list, list of drugs
+        :param n_of_steps: int, number of dilution steps
+        :return: pandas.DataFrame
+        """
         frames = []
         if not drugs:
             # process all drugs
@@ -264,6 +269,10 @@ if __name__ == '__main__':
     # Subset
     #sb = df.subset(drug='MS-1')
     #print(sb)
+
+    # Reshape
+    results = df.reshape()
+    print(results)
 
     # print(df.get_data().head(3))
     # print(df.get_data().tail(3))
