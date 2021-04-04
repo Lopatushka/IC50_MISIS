@@ -190,7 +190,11 @@ class CytotoxicityAssay(object):
         if isinstance(digits, int):
             self.__data['Погл. нормализ.'] = self.__data['Погл. нормализ.'].apply(lambda x: round(x, digits))
 
-    def drop_control(self, control_names=[]):
+    def drop_control(self, control_names=None):
+        """Drop contol drugs.
+        :param control_names: list of control names. e.x. ['DMSO', 'Doc']
+        :return: None
+        """
         if not control_names:
             control_names = self.list_of_controls()
 
