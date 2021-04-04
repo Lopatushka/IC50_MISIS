@@ -191,7 +191,7 @@ class CytotoxicityAssay(object):
             self.__data['Погл. нормализ.'] = self.__data['Погл. нормализ.'].apply(lambda x: round(x, digits))
 
     def drop_control(self, control_names=None):
-        """Drop contol drugs.
+        """Drop control drugs.
         :param control_names: list of control names. e.x. ['DMSO', 'Doc']
         :return: None
         """
@@ -204,6 +204,11 @@ class CytotoxicityAssay(object):
         self.__data.reset_index(drop=True, inplace=True)
 
     def subset(self, drug=None, n_of_steps=8):
+        """Subset one particular drug data from the dataframe.
+        :param drug: str, drug name
+        :param n_of_steps: int, number of dilution steps for each drug
+        :return: pandas.DataFrame or None if there is no such drug name in the dataframe
+        """
         if drug not in self.list_of_drugs():
             return
 
@@ -237,6 +242,7 @@ if __name__ == '__main__':
     df.read_data(path_to_file)
 
     # Information about dataset
+    print('Size of data:', df.get_data().shape)
     print('All drugs:', df.list_of_drugs(include_controls=True))
     print('Control drugs:', df.list_of_controls())
     print('Wavelengths:', df.list_of_wlengths())
@@ -252,4 +258,8 @@ if __name__ == '__main__':
     # Normalization to controls
     df.normalization(control_dict={}, digits=3)
 
-    print(df.get_data().tail())
+    # Drop controls
+    df.drop_control()
+
+    print(df.get_data().head(3))
+    print(df.get_data().tail(3))
