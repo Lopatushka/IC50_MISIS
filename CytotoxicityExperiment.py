@@ -204,7 +204,7 @@ class CytotoxicityAssay(object):
         self.__data.reset_index(drop=True, inplace=True)
 
     def subset(self, drug=None, n_of_steps=8):
-        """Subset one particular drug data from the dataframe.
+        """Subset one particular drug data from the dataframe for GraphPad Prism program.
         :param drug: str, drug name
         :param n_of_steps: int, number of dilution steps for each drug
         :return: pandas.DataFrame or None if there is no such drug name in the dataframe
@@ -261,5 +261,9 @@ if __name__ == '__main__':
     # Drop controls
     df.drop_control()
 
-    print(df.get_data().head(3))
-    print(df.get_data().tail(3))
+    # Subset
+    #sb = df.subset(drug='MS-1')
+    #print(sb)
+
+    # print(df.get_data().head(3))
+    # print(df.get_data().tail(3))
