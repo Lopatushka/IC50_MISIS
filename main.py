@@ -1,16 +1,17 @@
 import CytotoxicityExperiment as exp
 
-HEK_exp = ['C:/Users/acer/Desktop/Work/Data/MTS/18.12.20_MTS/HEK_plate_1.xlsx',
-           'C:/Users/acer/Desktop/Work/Data/MTS/18.12.20_MTS/HEK_plate_2.xlsx']
+path_to_file = ["C:/Users/acer/Desktop/Work/Data/MTS/05.04.21_MTS/HEK293_490.xls"]
+path_to_back = ["C:/Users/acer/Desktop/Work/Data/MTS/05.04.21_MTS/HEK293_700.xls"]
 
 # Import data & delete blank rows
 df = exp.CytotoxicityAssay()
-df.read_data(HEK_exp)
-df.delete_rows(colname='Тип', to_delete=['blank'])
+df.read_data(path_to_file)
 
 # Substract background
-df.substract_background(490, 700)
+df.sub_bgrnd(path_to_back)
 
+# Delete blank
+df.delete_rows(colname='Образец', to_delete=['Бланк'])
 
 # Information about dataset
 print('Size of data:', df.get_data().shape)
@@ -20,38 +21,23 @@ print('Control drugs:', df.list_of_controls())
 print('Wavelengths:', df.list_of_wlengths())
 
 # Add concentrations
-df.add_concentration(axis='vertical', n_of_steps=8,
-                     drugs_dict={"MS309": [100, 3],
-                                 "MMP58": [100, 3],
-                                 "MS306": [100, 3],
-                                 "MMAE": [0.5, 10]},
-                     exclude=['DMSO'],
-                     log_scale=True)
+df.add_concentration(drugs_dict={'DG4ClSe': [100, 3],
+                                 'DG4ClSek': [50, 3],
+                                 'DG603': [100, 3],
+                                 'DG603k': [100, 3],
+                                 'DG605': [100, 3],
+                                 'DG605k': [100, 3],
+                                 'DG606k': [100, 3],
+                                 'DG608k': [100, 3],
+                                 'DGAllC2': [100, 3],
+                                 'Dox': [53, 3]})
 
-print(df.get_data().head(16))
-print(df.get_data().tail(16))
+# Normalization
+df.normalization()
 
+# Drop control samples
+df.drop_control()
 
-# Normalization to controls
-df.normalization(control_dict={"MS309": "DMSO",
-                                "MMP58": "DMSO",
-                                "MS306": "DMSO",
-                                "MMAE": "DMSO"}, digits=3)
-
-
-
-# Drop controls
-df.drop_control(['DMSO'])
-
-# Subset
-sb = df.subset(drug='MS309')
-print(sb)
-
-# Reshape
-results = df.reshape()
-print(results)
-
-# Export to excel
-#results.to_excel('C:/Users/acer/Desktop/Work/Data/MTS/18.12.20_MTS/results/HEK_results.xlsx')
-
-
+# Export
+path_to_export = "C:/Users/acer/Desktop/Work/Data/MTS/05.04.21_MTS/HEK293_results.xlsx"
+df.reshape().to_excel(path_to_export)
