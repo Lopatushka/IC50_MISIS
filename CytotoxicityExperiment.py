@@ -13,11 +13,10 @@ class CytotoxicityAssay(object):
     def __init__(self):
         self.__data = None
         self.__experiment_name = []
-        self.__controls = []
-        self.__drugs = []
 
     def read_data(self, paths_list):
         """Read data from .xlsx files. Concatenates files and process dataframes.
+        Initialise self.__data, self.__experiment_name,
         :param paths_list: list, contains paths to .xlsx files
         :return: None
         """
@@ -86,6 +85,9 @@ class CytotoxicityAssay(object):
         """
         wlengths = self.__data['Длина волны'].unique().tolist()
         return wlengths
+
+    def get_wlengths(self):
+        return self.__wlengths
 
     def substract_background(self, wlength, wlength_to_subst):
         """ Substruct background absorption if it was measured.
