@@ -1,6 +1,7 @@
 import pandas as pd
 from math import log
 
+
 class CytotoxicityAssay(object):
     """A cytotoxicity essay class.
     Attributes:
@@ -122,7 +123,6 @@ class CytotoxicityAssay(object):
 
         self.__data['Погл.'] = self.__data['Погл.'] - bgrnd['Погл.']
 
-
     def add_concentration(self, axis='vertical', n_of_steps=8,
                           drugs_dict=None, log_scale=True, exclude=None):
         """Add concentration column 'Концентрация' to dataset.
@@ -204,7 +204,10 @@ class CytotoxicityAssay(object):
         if (drugs_from_dict | controls_from_dict) ^ list_of_drugs:
             raise ValueError('Incorrect control_dict value!')
 
-        self.__data['Погл. нормализ.'] = 0  # add new column
+        self.__data['Погл. нормализ.'] = 0  # Add new column
+        # Initialize for control samples
+        for control in controls_from_dict:
+            self.__data.loc[self.__data['Образец'] == control, 'Погл. нормализ.'] = self.__data.loc[self.__data['Образец'] == control, 'Погл.']
 
         if axis == 'vertical':
             for drug, control_drug in control_dict.items():
