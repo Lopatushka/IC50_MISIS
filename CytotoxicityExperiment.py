@@ -73,7 +73,7 @@ class CytotoxicityAssay(object):
         :param include_controls: bool, if True, include controls
         :return: list
         """
-        list_drugs = self.__data['Образец'].apply(lambda x: x.split('_')[0]).unique().tolist()
+        list_drugs = self.__data['Образец'].unique().tolist()
         if include_controls:
             return list_drugs
         return [drug for drug in list_drugs if drug not in self.list_of_controls()]
