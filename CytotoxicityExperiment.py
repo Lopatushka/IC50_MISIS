@@ -213,11 +213,14 @@ class CytotoxicityAssay(object):
 
     def drop_control(self, control_names=None):
         """Drop control drugs.
-        :param control_names: list of control names. e.x. ['DMSO', 'Doc']
+        :param control_names: list, list of control names., e.x. ['DMSO', 'Doc']
         :return: None
+        :raise: ValueError if there is no control_names to remove
         """
         if not control_names:
             control_names = self.list_of_controls()
+            if not control_names:
+                raise ValueError("There is no Control drugs to remove!")
 
         for name in control_names:
             self.__data.drop(self.__data[self.__data['Образец'] == name].index, inplace=True)
