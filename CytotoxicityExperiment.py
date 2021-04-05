@@ -105,12 +105,13 @@ class CytotoxicityAssay(object):
         self.__data["Погл."] = self.__data["Погл."] - background
 
     def add_concentration(self, axis='vertical', n_of_steps=8,
-                          drugs_dict=None, log_scale=True, exclude = None):
+                          drugs_dict=None, log_scale=True, exclude=None):
         """Add concentration column 'Концентрация' to dataset.
         :param axis: str {'vertical','horizontal'}, the mode of drug addition
         :param n_of_steps: int, the number of concentrations of each drug
         :param drugs_dict: dict, {drug name: [start concentration, dilution step]}
         :param log_scale: bool, if True, make apply log10 to concentration values
+        :param exclude: list, list of drugs to exclude
         :return: None
         :raise: ValueError if drugs_dict.keys() and unique drugs are not equal
         """
@@ -135,7 +136,7 @@ class CytotoxicityAssay(object):
         drugs_from_arg = set(drugs_dict.keys())
         if not exclude:
             exclude = []
-        if drugs_in_data ^ drugs_from_arg - set(exclude):
+        if (drugs_in_data^drugs_from_arg) - set(exclude):
             raise ValueError(f'The drug set must be equal to the keys in drugs_dict!')
 
         f = lambda x: isinstance(x, int)
