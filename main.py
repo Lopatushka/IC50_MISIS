@@ -1,14 +1,15 @@
 import CytotoxicityExperiment as exp
-path_to_file = 'C:/Users/acer/Desktop/Work/Data/MTS/18.12.20_MTS/HEK_plate_1.xlsx'
+HEK_exp = ['C:/Users/acer/Desktop/Work/Data/MTS/18.12.20_MTS/HEK_plate_1.xlsx',
+           'C:/Users/acer/Desktop/Work/Data/MTS/18.12.20_MTS/HEK_plate_2.xlsx']
 
 # Import data
 df = exp.CytotoxicityAssay()
-df.read_data(path_to_file)
+df.read_data(HEK_exp)
 
 print(df.get_data().columns)
 
 # Delete blank rows
-df.delete_rows(colname='Тип', to_delete=['blank'])
+#df.delete_rows(colname='Тип', to_delete=['blank'])
 
 # Information about dataset
 print('Size of data:', df.get_data().shape)

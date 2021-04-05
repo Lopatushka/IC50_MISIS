@@ -25,7 +25,7 @@ class CytotoxicityAssay(object):
 
         for f in paths_list:
             plate_number += 1
-            data = pd.read_excel(path, header=None)
+            data = pd.read_excel(f, header=None)
             data.columns = data.iloc[2]
             self.__experiment_name.append(data.iloc[0, 0])
             data = data.drop([0, 1, 2])
