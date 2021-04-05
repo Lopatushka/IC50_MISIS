@@ -17,7 +17,7 @@ class CytotoxicityAssay(object):
         self.__drugs = []
 
     def read_data(self, paths_list):
-        """Read data from .xlsx file. Process dataframes.
+        """Read data from .xlsx files. Concatenates files and process dataframes.
         :param paths_list: list, contains paths to .xlsx files
         :return: None
         """
