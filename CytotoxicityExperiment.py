@@ -258,17 +258,28 @@ class CytotoxicityAssay(object):
         replicates = sum(self.__data['Образец'] == drug) // n_of_steps
         concentrations = self.__data.loc[self.__data['Образец'] == drug, 'Концентрация'].values[0:n_of_steps]
 
-        # Subset 'Погл. нормализ.' or 'Погл.'
-        if 'Погл. нормализ.' in self.__data:
-            subset = self.__data.loc[self.__data['Образец'] == drug, 'Погл. нормализ.']
-        else:
-            subset = self.__data.loc[self.__data['Образец'] == drug, 'Погл.']
+        # Subset by drug name
+        subset = self.__data.loc[self.__data['Образец'] == drug]
 
-        subset = pd.DataFrame(subset.values.reshape(n_of_steps, replicates))  # reshape 8-3
-        subset['Концентрация'] = concentrations
-        subset['Название'] = drug
-        subset = subset[['Концентрация', 0, 1, 2, 'Название']]  #todo n_repicates!
-        return subset
+        # Create empty dataframe
+        subset_rechaped = pd.DataFrame(columns=['Название', 'Концентрация'])
+        for rep in range(replicates):
+            subset_rechaped[rep] = 0
+
+        # Add cols with data to subset_rechaped dataframe and fill them
+        j = 0
+        rep = 0
+        while j < n_of_steps * replicates:
+            if 'Погл. нормализ.' in self.__data:
+                subset_rechaped[rep] = subset['Погл. нормализ.'][j: (j + n_of_steps)].tolist()
+            else:
+                subset_rechaped[rep] = subset['Погл.'][j: (j + n_of_steps)].tolist()
+            rep += 1
+            j += n_of_steps
+
+        subset_rechaped['Концентрация'] = concentrations
+        subset_rechaped['Название'] = drug
+        return subset_rechaped
 
     def reshape(self, drugs=None, n_of_steps=8):
         """Reshape dataframe for GraphPad Prism program
