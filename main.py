@@ -9,10 +9,11 @@ df.read_data(HEK_exp)
 print(df.get_data().columns)
 
 # Delete blank rows
-#df.delete_rows(colname='Тип', to_delete=['blank'])
+df.delete_rows(colname='Тип', to_delete=['blank'])
 
 # Information about dataset
 print('Size of data:', df.get_data().shape)
+print('Plates:', df.list_of_plates())
 print('All drugs:', df.list_of_drugs(include_controls=True))
 print('Control drugs:', df.list_of_controls())
 print('Wavelengths:', df.list_of_wlengths())

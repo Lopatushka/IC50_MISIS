@@ -13,11 +13,12 @@ class CytotoxicityAssay(object):
     def __init__(self):
         self.__data = None
         self.__experiment_name = []
+        self.__controls = []
+        self.__drugs = []
 
     def read_data(self, paths_list):
-        """Read data from .xlsx file
-
-        :param paths_list: list, path to .xlsx files
+        """Read data from .xlsx file. Process dataframes.
+        :param paths_list: list, contains paths to .xlsx files
         :return: None
         """
         df = pd.DataFrame()
