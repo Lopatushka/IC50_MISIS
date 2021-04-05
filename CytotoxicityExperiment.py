@@ -185,8 +185,8 @@ class CytotoxicityAssay(object):
         :param digits: int, number of digits after decimal. If None, no rounding
         :return: None
         """
+        # if empty dict use 'Контр. образец' for all drugs
         if not control_dict:
-            # Use Контр. образец for all drugs
             if 'Контр. образец' not in self.__data['Тип'].unique():
                 raise ValueError('There is no Control samples for normalization!')
             else:
@@ -211,10 +211,9 @@ class CytotoxicityAssay(object):
                 replicates = sum(self.__data['Образец'] == drug) // n_of_steps
 
                 # Subset control for each drug. Reshape the table and find mean
-                control = self.__data.loc[self.__data['Образец'] == control_drug, 'Погл.']
-                control = pd.DataFrame(control.values.reshape(n_of_steps, replicates))
+                control = self.subset(drug=control_drug, n_of_steps=n_of_steps)
+                control = control.drop(['Название', 'Концентрация'], axis=1)
                 control['Mean'] = control.mean(axis=1)
-
                 to_normalize = list(control['Mean']) * replicates
 
                 self.__data.loc[self.__data['Образец'] == drug, 'Погл. нормализ.'] = 100 * self.__data.loc[
@@ -235,7 +234,7 @@ class CytotoxicityAssay(object):
         if not control_names:
             control_names = self.list_of_controls()
             if not control_names:
-                raise ValueError("There is no Control drugs to remove!")
+                raise ValueError("There is no Control samples to remove!")
 
         for name in control_names:
             self.__data.drop(self.__data[self.__data['Образец'] == name].index, inplace=True)
