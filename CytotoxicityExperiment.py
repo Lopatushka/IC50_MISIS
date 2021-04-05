@@ -105,7 +105,7 @@ class CytotoxicityAssay(object):
 
     def sub_bgrnd(self, paths_to_bgrnd):
         """Substruct background absorption if it was measured in additional file.
-        :param paths_to_bgrnd: list, contains paths to .xlsx files
+        :param paths_to_bgrnd: list, contains paths to .xlsx files wih background measurement
         :return: None
         """
         # Read background file
