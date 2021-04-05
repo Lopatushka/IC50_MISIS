@@ -236,12 +236,16 @@ class CytotoxicityAssay(object):
         replicates = sum(self.__data['Образец'] == drug) // n_of_steps
         concentrations = self.__data.loc[self.__data['Образец'] == drug, 'Концентрация'].values[0:n_of_steps]
 
-        subset = self.__data.loc[self.__data['Образец'] == drug, 'Погл. нормализ.']  # subset
+        # Subset 'Погл. нормализ.' or 'Погл.'
+        if 'Погл. нормализ.' in self.__data:
+            subset = self.__data.loc[self.__data['Образец'] == drug, 'Погл. нормализ.']
+        else:
+            subset = self.__data.loc[self.__data['Образец'] == drug, 'Погл.']
+
         subset = pd.DataFrame(subset.values.reshape(n_of_steps, replicates))  # reshape 8-3
         subset['Концентрация'] = concentrations
         subset['Название'] = drug
-        subset = subset[['Концентрация', 0, 1, 2, 'Название']]  # reorder cols
-
+        subset = subset[['Концентрация', 0, 1, 2, 'Название']]  #todo n_repicates!
         return subset
 
     def reshape(self, drugs=None, n_of_steps=8):
