@@ -256,7 +256,6 @@ class CytotoxicityAssay(object):
             return
 
         replicates = sum(self.__data['Образец'] == drug) // n_of_steps
-        concentrations = self.__data.loc[self.__data['Образец'] == drug, 'Концентрация'].values[0:n_of_steps]
 
         # Subset by drug name
         subset = self.__data.loc[self.__data['Образец'] == drug]
@@ -277,7 +276,10 @@ class CytotoxicityAssay(object):
             rep += 1
             j += n_of_steps
 
-        subset_rechaped['Концентрация'] = concentrations
+        if 'Концентрация' in self.__data:
+            concentrations = self.__data.loc[self.__data['Образец'] == drug, 'Концентрация'].values[0:n_of_steps]
+            subset_rechaped['Концентрация'] = concentrations
+
         subset_rechaped['Название'] = drug
         return subset_rechaped
 
