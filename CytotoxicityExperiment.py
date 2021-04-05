@@ -86,9 +86,9 @@ class CytotoxicityAssay(object):
         wlengths = self.__data['Длина волны'].unique().tolist()
         return wlengths
 
-    def substract_background(self, wlength, wlength_to_subst):
-        """ Substruct background absorption if it was measured.
-        :param wlength: int, the wavelength of MTS/MTT reagent absorbtion
+    def sub_bgrnd_single(self, wlength, wlength_to_subst):
+        """ Substruct background absorption if it was measured in single file.
+        :param wlength: int, the wavelength of MTS/MTT reagent absorption
         :param wlength_to_subst: int, the background wavelength
         :return: None
         """
@@ -103,6 +103,26 @@ class CytotoxicityAssay(object):
         self.__data.reset_index(drop=True, inplace=True)
 
         self.__data["Погл."] = self.__data["Погл."] - background
+
+    def sub_bgrnd(self, paths_to_bgrnd):
+        """Substruct background absorption if it was measured in additional file.
+        :param paths_to_bgrnd: list, contains paths to .xlsx files
+        :return: None
+        """
+        df = pd.DataFrame()
+        plate_number = 0
+        for f in paths_to_bgrnd:
+            plate_number += 1
+            bgrnd = pd.read_excel(f, header=None)
+            bgrnd.columns = bgrnd.iloc[2]
+            bgrnd = bgrnd.drop([0, 1, 2])
+            bgrnd = bgrnd.dropna(axis=1)
+            bgrnd.reset_index(drop=True, inplace=True)
+            bgrnd['Планшет'] = 'Планшет' + ' ' + str(plate_number)
+            df = df.append(bgrnd)
+
+        self.__data['Погл.'] = self.__data['Погл.'] - bgrnd['Погл.']
+
 
     def add_concentration(self, axis='vertical', n_of_steps=8,
                           drugs_dict=None, log_scale=True, exclude=None):
@@ -173,7 +193,6 @@ class CytotoxicityAssay(object):
             # Use Контр. образец for all drugs
             if 'Контр. образец' not in self.__data['Тип'].unique():
                 raise ValueError('There is no Control samples for normalization!')
-
             else:
                 controls = self.__data.loc[self.__data['Тип'] == 'Контр. образец', 'Образец'].unique().tolist()
                 n_control_drugs = len(controls)
