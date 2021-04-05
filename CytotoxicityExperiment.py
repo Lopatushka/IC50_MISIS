@@ -65,7 +65,7 @@ class CytotoxicityAssay(object):
         if 'Контр. образец' not in self.__data['Тип'].unique():
             return []
         else:
-            controls = self.__data.loc[self.__data['Тип'] == 'Контр. образец', 'Образец'].tolist()
+            controls = self.__data.loc[self.__data['Тип'] == 'Контр. образец', 'Образец'].unique().tolist()
             return controls
 
     def list_of_drugs(self, include_controls=True):
