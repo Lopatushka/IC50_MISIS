@@ -55,6 +55,11 @@ class CytotoxicityAssay(object):
         mask = self.__data[colname].apply(lambda x: x not in to_delete)
         self.__data = self.__data[mask]
 
+    def list_of_plates(self):
+        """Return the list of plates name
+        """
+        return self.get_data()['Планшет'].unique().tolist()
+
     def list_of_controls(self):
         """Return list of controls whose type is 'Контр. образец'
         """
