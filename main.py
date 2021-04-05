@@ -25,7 +25,7 @@ df.add_concentration(axis='vertical', n_of_steps=8,
                                  "MS306": [100, 3],
                                  "MMAE": [0.5, 10]},
                      exclude=['DMSO'],
-                     log_scale=False)
+                     log_scale=True)
 
 # Normalization to controls
 df.normalization(control_dict={"MS309": "DMSO",
@@ -45,7 +45,7 @@ results = df.reshape()
 print(results)
 
 # Export to excel
-results.to_excel('C:/Users/acer/Desktop/Work/Data/MTS/18.12.20_MTS/HEK_results.xlsx')
+#results.to_excel('C:/Users/acer/Desktop/Work/Data/MTS/18.12.20_MTS/HEK_results.xlsx')
 
 #print(df.get_data().head(16))
 #print(df.get_data().tail(16))
