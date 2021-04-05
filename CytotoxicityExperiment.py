@@ -107,6 +107,7 @@ class CytotoxicityAssay(object):
         :param paths_to_bgrnd: list, contains paths to .xlsx files
         :return: None
         """
+        # Read background file
         df = pd.DataFrame()
         plate_number = 0
         for f in paths_to_bgrnd:
@@ -145,9 +146,6 @@ class CytotoxicityAssay(object):
             result.append(start)
             create_concentration(start / step, step, n - 1, result)
             return result
-
-        # Rename drugs
-        self.__data['Образец'] = self.__data['Образец'].apply(lambda x: x.split('_')[0])
 
         # Checking drugs_dict input
         drugs_in_data = set(self.list_of_drugs(include_controls=False))
