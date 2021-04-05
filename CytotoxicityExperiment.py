@@ -136,10 +136,10 @@ class CytotoxicityAssay(object):
         drugs_from_arg = set(drugs_dict.keys())
         if not exclude:
             exclude = []
-        if (drugs_in_data^drugs_from_arg) - set(exclude):
+        if (drugs_in_data ^ drugs_from_arg) - set(exclude):
             raise ValueError(f'The drug set must be equal to the keys in drugs_dict!')
 
-        f = lambda x: isinstance(x, int)
+        f = lambda x: isinstance(x, (int, float))
         for li in drugs_dict.values():
             if len(li) == 2:
                 if sum(map(f, li)) == 2:
@@ -205,7 +205,7 @@ class CytotoxicityAssay(object):
                 self.__data.loc[self.__data['Образец'] == drug, 'Погл. нормализ.'] = 100 * self.__data.loc[
                     self.__data['Образец'] == drug, 'Погл.'] / to_normalize
 
-        elif axis == 'horizontal': # todo add 'horizontal' part for normalization
+        elif axis == 'horizontal':  # todo add 'horizontal' part for normalization
             pass
 
         if isinstance(digits, int):
@@ -260,8 +260,7 @@ class CytotoxicityAssay(object):
 
         return pd.concat(frames, axis=1, keys=drugs)
 
+
 class CytotoxicityExperiment(object):
     def __init__(self):
         pass
-
-
