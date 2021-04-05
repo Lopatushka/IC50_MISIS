@@ -32,6 +32,7 @@ class CytotoxicityAssay(object):
             data = data.dropna(axis=1)
             data.reset_index(drop=True, inplace=True)
             data['Планшет'] = 'Планшет' + ' ' + str(plate_number)
+            data['Образец'] = data['Образец'].apply(lambda x: x.split('_')[0])
             df = df.append(data)
 
         self.__data = df
