@@ -14,22 +14,26 @@ class CytotoxicityAssay(object):
         self.__data = None
         self.__experiment_name = None
 
-    def read_data(self, path):
+    def read_data(self, paths_list):
         """Read data from .xlsx file
 
-        :param path: str, path to .xlsx file
+        :param paths_list: list, path to .xlsx files
         :return: None
         """
-        data = pd.read_excel(path, header=None)
-        data.columns = data.iloc[2]
-        self.__experiment_name = data.iloc[0, 0]
+        df = pd.DataFrame()
+        plate_number = 0
 
-        data = data.drop([0, 1, 2])
-        data = data.dropna(axis=1)
+        for f in paths_list:
+            plate_number += 1
+            data = pd.read_excel(path, header=None)
+            data.columns = data.iloc[2]
+            data = data.drop([0, 1, 2])
+            data = data.dropna(axis=1)
+            data.reset_index(drop=True, inplace=True)
+            data['Планшет'] = 'Планшет' + ' ' + str(plate_number)
+            df = df.append(data)
 
-        data.reset_index(drop=True, inplace=True)
-
-        self.__data = data
+        self.__data = df
 
     def get_data(self):
         """Get pandas.DataFrame with data
