@@ -1,10 +1,8 @@
 import pandas as pd
 from math import log
 
-
 class CytotoxicityAssay(object):
-    """A cytotoxicity essay.
-
+    """A cytotoxicity essay class.
     Attributes:
         __data: Pandas.DataFrame
         __experiment_name
@@ -16,7 +14,7 @@ class CytotoxicityAssay(object):
 
     def read_data(self, paths_list):
         """Read data from .xlsx files. Concatenates files and process dataframes.
-        Initialise self.__data, self.__experiment_name,
+        Initialise self.__data, self.__experiment_name. Rename drugs.
         :param paths_list: list, contains paths to .xlsx files
         :return: None
         """
@@ -67,8 +65,7 @@ class CytotoxicityAssay(object):
         if 'Контр. образец' not in self.__data['Тип'].unique():
             return []
         else:
-            controls = self.__data.loc[self.__data['Тип'] == 'Контр. образец', 'Образец'].apply(
-                lambda x: x.split('_')[0]).unique().tolist()
+            controls = self.__data.loc[self.__data['Тип'] == 'Контр. образец', 'Образец'].tolist()
             return controls
 
     def list_of_drugs(self, include_controls=True):
