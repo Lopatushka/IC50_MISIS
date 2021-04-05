@@ -257,6 +257,9 @@ class CytotoxicityAssay(object):
 
         replicates = sum(self.__data['Образец'] == drug) // n_of_steps
 
+        # Rename drugs
+        self.__data['Образец'] = self.__data['Образец'].apply(lambda x: x.split('_')[0])
+
         # Subset by drug name
         subset = self.__data.loc[self.__data['Образец'] == drug]
 
