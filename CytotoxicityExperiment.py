@@ -12,7 +12,7 @@ class CytotoxicityAssay(object):
 
     def __init__(self):
         self.__data = None
-        self.__experiment_name = None
+        self.__experiment_name = []
 
     def read_data(self, paths_list):
         """Read data from .xlsx file
@@ -27,6 +27,7 @@ class CytotoxicityAssay(object):
             plate_number += 1
             data = pd.read_excel(path, header=None)
             data.columns = data.iloc[2]
+            self.__experiment_name.append(data.iloc[0, 0])
             data = data.drop([0, 1, 2])
             data = data.dropna(axis=1)
             data.reset_index(drop=True, inplace=True)
