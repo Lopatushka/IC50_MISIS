@@ -1,6 +1,6 @@
 import pandas as pd
 from math import log
-
+import os
 
 class CytotoxicityAssay(object):
     """A cytotoxicity essay class.

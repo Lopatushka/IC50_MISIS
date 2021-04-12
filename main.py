@@ -31,6 +31,7 @@ df.drop_control()
 
 print(df.reshape())
 
-# # Export
-#path_to_export = "C:/Users/User/Documents/Work/Data/MTS/09.04.21_MTS/results/HEK293_results.xlsx"
-#df.reshape().to_excel(path_to_export)
+# Export
+path_to_export = "C:/Users/User/Documents/Work/Data/MTS/12.04.21_MTS/"
+exp.Export(data=df, name='HepG2.xlsx', path_to_export=path_to_export)
+
