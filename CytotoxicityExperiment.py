@@ -297,6 +297,15 @@ class CytotoxicityAssay(object):
 
         return pd.concat(frames, axis=1, keys=drugs)
 
+def Export(data, name='results.xlsx', path_to_export='.'):
+    if name[-5:] == '.xlsx' or name[-4:] == '.xls':
+        if os.path.isdir(path_to_export):
+            data.to_excel(path_to_export + '/' + name)
+            print('Done!')
+        else:
+            raise ValueError('Incorrect path!')
+    else:
+        raise ValueError('Incorrect name: name must be ended to .xlsx or .xls')
 
 class CytotoxicityExperiment(object):
     def __init__(self):

@@ -2,9 +2,6 @@ import CytotoxicityExperiment as exp
 
 path_to_file = ["C:/Users/User/Documents/Work/Data/MTS/12.04.21_MTS/12.04.21_MTS_HepG2.xlsx"]
 
-#"C:\Users\User\Documents\Work\Data\MTS\09.04.21_MTS"
-#path_to_back = ["C:/Users/acer/Desktop/Work/Data/MTS/05.04.21_MTS/HEK293_700.xls"]
-
 # Import data & delete blank rows
 df = exp.CytotoxicityAssay()
 df.read_data(path_to_file)
@@ -32,7 +29,7 @@ df.normalization()
 # Drop control samples
 df.drop_control()
 
-#print(df.reshape())
+print(df.reshape())
 
 # # Export
 #path_to_export = "C:/Users/User/Documents/Work/Data/MTS/09.04.21_MTS/results/HEK293_results.xlsx"
