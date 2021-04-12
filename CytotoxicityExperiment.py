@@ -195,7 +195,7 @@ class CytotoxicityAssay(object):
                 if n_control_drugs != 1:
                     raise ValueError('There is more than one Control samples for normalization!')
                 else:
-                    control_dict = {drug: controls[0] for drug in self.list_of_drugs() if drug != controls}
+                    control_dict = {drug: controls[0] for drug in self.list_of_drugs() if drug != controls[0]}
 
         # Checking that 'Контр. образец' and drugs are in table
         list_of_drugs = set(self.list_of_drugs())
