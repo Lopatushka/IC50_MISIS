@@ -1,6 +1,6 @@
 import CytotoxicityExperiment as exp
 
-path_to_file = ["C:/Users/User/Documents/Work/Data/MTS/12.04.21_MTS/12.04.21_MTS_HepG2.xlsx"]
+path_to_file = ["C:/Users/User/Documents/Work/Data/MTS/12.04.21_MTS/12.04.21_MTS_HEK293.xlsx"]
 
 # Import data & delete blank rows
 df = exp.CytotoxicityAssay()
@@ -21,17 +21,25 @@ print('Wavelengths:', df.list_of_wlengths())
 
 
 # Add concentrations
-df.add_concentration(drugs_dict={'MMAE': [0.5, 3], 'MMP49': [100, 3]})
+df.add_concentration(drugs_dict={'DG4ClSe': [100, 3],
+                                 'DG4CkSek': [50, 3],
+                                 'DG605k': [100, 2],
+                                 'DG606k': [200, 2],
+                                 'DG618k': [100, 3],
+                                 'DGAllC2': [100, 2]
+                                 })
 
 # Normalization
-df.normalization()
-#
+df.normalization(control_dict={'DG4ClSe': 'DMSO-dil3', 'DG4CkSek': 'DMSO-dil3',
+                               'DG605k': 'DMSO-dil2', 'DG606k': 'DMSO-dil2',
+                               'DG618k': 'DMSO-dil3', 'DGAllC2': 'DMSO-dil2'})
+
 # Drop control samples
-df.drop_control()
+df.drop_control(control_names=['DMSO-dil2', 'DMSO-dil3'])
 
 print(df.reshape())
-
-# Export
+#
+# # Export
 path_to_export = "C:/Users/User/Documents/Work/Data/MTS/12.04.21_MTS/"
-exp.Export(data=df, name='HepG2.xlsx', path_to_export=path_to_export)
+exp.Export(data=df.reshape(), name='HEK293.xlsx', path_to_export=path_to_export)
 
