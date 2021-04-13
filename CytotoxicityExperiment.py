@@ -312,7 +312,7 @@ def Export(data, name='results.xlsx', path_to_dir='.'):
 
     Warnings:
         if there is the file with the same name: the user need to type "Y" or "N" to the console
-        to permit (not permit) file rewriting
+        to permit (not permit) the file rewriting
 
     """
     path_to_file = path_to_dir + '/' + name
