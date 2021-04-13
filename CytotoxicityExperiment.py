@@ -362,7 +362,7 @@ class CytotoxicityExperiment(object):
         for exp in exp_names:
             temp = CytotoxicityAssay()
             temp.set_data(data.get_data().loc[data.get_data()['Планшет'] == exp])
-            self.experiments.append(temp)
+            self.__experiments.append(temp)
 
     def get_data(self):
-        return list(map(lambda x: x.get_data(), self.__experiments))
+        return list(map(lambda x: x.get_data, self.__experiments))
