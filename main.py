@@ -40,8 +40,8 @@ df.read_data(path_to_file)
 # print(df.reshape())
 # #
 # # # Export
-path_to_export = "C:/Users/User/Documents/Work/Data/MTS/12.04.21_MTS/"
+path_to_export = "C:/Users/User/Documents/Work/Data/MTS/12.04.21_MTS"
 # exp.Export(data=df.reshape(), name='HEK293.xlsx', path_to_dir=path_to_export)
 #
 
-exp.Export(data=df, name='test.xlsx', path_to_dir=path_to_export)
+exp.Export(data=df.get_data(), name='test.xlsx', path_to_dir=path_to_export)

@@ -309,7 +309,7 @@ def Export(data, name='results.xlsx', path_to_dir='.'):
     elif my_file.exists():  # Checking if the file with the same name is already exists
         answer = None
         while answer != 'Y' and answer != 'N':
-            answer = input('Do you want to rewrite the file (Y/N): ')
+            answer = input('There is the file with the same name. Do you want to rewrite it? (Y/N): ')
 
         if answer == 'Y':
             data.to_excel(path_to_file)
