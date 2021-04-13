@@ -23,10 +23,11 @@ class CytotoxicityAssay(object):
         """
         self.__data = data
 
-    def read_data(self, paths_list):
+    def read_data(self, paths_list, rename_plates=False):
         """Read data from .xlsx files. Concatenates files and process dataframes.
         Initialise self.__data, self.__experiment_name. Rename drugs.
         :param paths_list: list, contains paths to .xlsx files
+        :param rename_plates: bool, if True rename plates to 'Планшет 1', 'Планшет 2' etc fo each file
         :return: None
         """
         df = pd.DataFrame()
@@ -40,7 +41,8 @@ class CytotoxicityAssay(object):
             data = data.drop([0, 1, 2])
             data = data.dropna(axis=1)
             data.reset_index(drop=True, inplace=True)
-            data['Планшет'] = 'Планшет' + ' ' + str(plate_number)
+            if rename_plates:
+                data['Планшет'] = 'Планшет' + ' ' + str(plate_number)
             data['Образец'] = data['Образец'].apply(lambda x: x.split('_')[0])
             df = df.append(data)
 
