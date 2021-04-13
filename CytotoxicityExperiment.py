@@ -1,6 +1,6 @@
 import pandas as pd
 from math import log
-import os
+from pathlib import Path
 
 class CytotoxicityAssay(object):
     """A cytotoxicity essay class.
@@ -297,15 +297,21 @@ class CytotoxicityAssay(object):
 
         return pd.concat(frames, axis=1, keys=drugs)
 
-def Export(data, name='results.xlsx', path_to_export='.'):
-    if name[-5:] == '.xlsx' or name[-4:] == '.xls':
-        if os.path.isdir(path_to_export):
-            data.to_excel(path_to_export + '/' + name)
-            print('Done!')
-        else:
-            raise ValueError('Incorrect path!')
-    else:
+def Export(data, name='results.xlsx', path_to_dir='.'):
+    path_to_file = path_to_dir + '/' + name
+    my_file = Path(path_to_file)
+
+    if not (name[-5:] == '.xlsx' and name[-4:] == '.xls'):  # Checking file name
         raise ValueError('Incorrect name: name must be ended to .xlsx or .xls')
+    elif not path_to_dir.is_dir():  # Checking path
+        raise ValueError('Incorrect path: path_to_dir must be directory!')
+    elif my_file.exists():  # Checking
+        pass
+        # todo warning
+    else:
+        data.to_excel(path_to_file)
+        print('Done!')
+
 
 class CytotoxicityExperiment(object):
     def __init__(self):
