@@ -305,9 +305,17 @@ def Export(data, name='results.xlsx', path_to_dir='.'):
         raise ValueError('Incorrect name: name must be ended to .xlsx or .xls')
     elif not my_file.is_dir():  # Checking path
         raise ValueError('Incorrect path: path_to_dir must be directory!')
-    elif my_file.exists():  # Checking
-        pass
-        # todo warning
+    elif my_file.exists():  # Checking if the file with the same name is already exists
+        answer = None
+        while answer != 'Y' and answer != 'N':
+            answer = input('Do you want to rewrite the file (Y/N): ')
+
+        if answer == 'Y':
+            data.to_excel(path_to_file)
+            print('File is changed!')
+        else:
+            print("File wasn't saved!")
+
     else:
         data.to_excel(path_to_file)
         print('Done!')
