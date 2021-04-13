@@ -301,7 +301,7 @@ def Export(data, name='results.xlsx', path_to_dir='.'):
     path_to_file = path_to_dir + '/' + name
     my_file = Path(path_to_file)
 
-    if not (name[-5:] == '.xlsx' and name[-4:] == '.xls'):  # Checking file name
+    if name[-5:] != '.xlsx' and name[-4:] != '.xls':  # Checking file name
         raise ValueError('Incorrect name: name must be ended to .xlsx or .xls')
     elif not my_file.is_dir():  # Checking path
         raise ValueError('Incorrect path: path_to_dir must be directory!')
