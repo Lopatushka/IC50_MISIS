@@ -353,13 +353,16 @@ def Export(data, name='results.xlsx', path_to_dir='.'):
 
 class CytotoxicityExperiment(object):
     def __init__(self):
-        self.experiments = []
+        self.__experiments = []
 
     def read_data(self, paths_list):
         data = CytotoxicityAssay()
-        data.read_data(paths_list)
+        data.read_data(paths_list, rename_plates=False)
         exp_names = data.get_data()['Планшет'].unique().tolist()
         for exp in exp_names:
             temp = CytotoxicityAssay()
             temp.set_data(data.get_data().loc[data.get_data()['Планшет'] == exp])
             self.experiments.append(temp)
+
+    def get_data(self):
+        return list(map(lambda x: x.get_data(), self.__experiments))
