@@ -308,7 +308,7 @@ def Export(data, name='results.xlsx', path_to_dir='.'):
         None
 
     Raises:
-        ValueError: if there is incorrect file extention or path_to_dir variable (no such directory)
+        ValueError: if there is incorrect file extension or path_to_dir variable (no such directory)
 
     Warnings:
         if there is the file with the same name: the user need to type "Y" or "N" to the console
