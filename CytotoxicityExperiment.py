@@ -365,4 +365,4 @@ class CytotoxicityExperiment(object):
             self.__experiments.append(temp)
 
     def get_data(self):
-        return list(map(lambda x: x.get_data, self.__experiments))
+        return list(map(lambda x: x.get_data(), self.__experiments))
