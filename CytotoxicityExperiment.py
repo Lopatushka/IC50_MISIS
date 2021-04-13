@@ -3,7 +3,7 @@ from math import log
 from pathlib import Path
 
 class CytotoxicityAssay(object):
-    """A cytotoxicity essay class.
+    """A cytotoxicity essay class. Several files for single cell culture.
     Attributes:
         __data: Pandas.DataFrame
         __experiment_name
@@ -12,6 +12,16 @@ class CytotoxicityAssay(object):
     def __init__(self):
         self.__data = None
         self.__experiment_name = []
+
+    def set_data(self, data):
+        """Set Pandas dataframe to self.__data attr
+        Args:
+            data: PandasDataFrame
+
+        Returns: None
+
+        """
+        self.__data = data
 
     def read_data(self, paths_list):
         """Read data from .xlsx files. Concatenates files and process dataframes.
@@ -341,4 +351,13 @@ def Export(data, name='results.xlsx', path_to_dir='.'):
 
 class CytotoxicityExperiment(object):
     def __init__(self):
-        pass
+        self.experiments = []
+
+    def read_data(self, paths_list):
+        data = CytotoxicityAssay()
+        data.read_data(paths_list)
+        exp_names = data.get_data()['Планшет'].unique().tolist()
+        for exp in exp_names:
+            temp = CytotoxicityAssay()
+            temp.set_data(data.get_data().loc[data.get_data()['Планшет'] == exp])
+            self.experiments.append(temp)
