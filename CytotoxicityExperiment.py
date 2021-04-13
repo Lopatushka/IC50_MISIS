@@ -298,6 +298,23 @@ class CytotoxicityAssay(object):
         return pd.concat(frames, axis=1, keys=drugs)
 
 def Export(data, name='results.xlsx', path_to_dir='.'):
+    """ This fun saves pandas dataframe to the excel file (.xls or .xlsx)
+    Args:
+        data: the Pandas dataframe variable
+        name: str, the name of excel file (default='results.xlsx')
+        path_to_dir: str, the path to directory the file must be saved in (default='.')
+
+    Returns:
+        None
+
+    Raises:
+        ValueError: if there is incorrect file extention or path_to_dir variable (no such directory)
+
+    Warnings:
+        if there is the file with the same name: the user need to type "Y" or "N" to the console
+        to permit (not permit) file rewriting
+
+    """
     path_to_file = path_to_dir + '/' + name
     my_dir = Path(path_to_dir)
     my_file = Path(path_to_file)

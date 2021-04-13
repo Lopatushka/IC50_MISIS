@@ -44,4 +44,4 @@ path_to_export = "C:/Users/User/Documents/Work/Data/MTS/12.04.21_MTS"
 # exp.Export(data=df.reshape(), name='HEK293.xlsx', path_to_dir=path_to_export)
 #
 
-exp.Export(data=df.get_data(), name='test.xlsx', path_to_dir=path_to_export)
+exp.Export(data=df.get_data(), name='test.xls', path_to_dir=path_to_export)
