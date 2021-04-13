@@ -299,12 +299,13 @@ class CytotoxicityAssay(object):
 
 def Export(data, name='results.xlsx', path_to_dir='.'):
     path_to_file = path_to_dir + '/' + name
+    my_dir = Path(path_to_dir)
     my_file = Path(path_to_file)
 
     if name[-5:] != '.xlsx' and name[-4:] != '.xls':  # Checking file name
         raise ValueError('Incorrect name: name must be ended to .xlsx or .xls')
-    elif not my_file.is_dir():  # Checking path
-        raise ValueError('Incorrect path: path_to_dir must be directory!')
+    elif not my_dir.is_dir():  # Checking path
+        raise ValueError('Incorrect path: path_to_dir must exists and be a directory!')
     elif my_file.exists():  # Checking if the file with the same name is already exists
         answer = None
         while answer != 'Y' and answer != 'N':
@@ -314,7 +315,7 @@ def Export(data, name='results.xlsx', path_to_dir='.'):
             data.to_excel(path_to_file)
             print('File is changed!')
         else:
-            print("File wasn't saved!")
+            print("File doesn't saved!")
 
     else:
         data.to_excel(path_to_file)
