@@ -30,16 +30,17 @@ print('Wavelengths:', df.list_of_wlengths())
 
 #Add concentrations
 df.add_concentration(drugs_dict={'MMAE': [0.5, 10], 'MS309': [100, 3],
-                                 'MMP58': [100, 3], 'MS306': [100, 3]})
+                                 'MMP58': [100, 3], 'MS306': [100, 3]},
+                     exclude=['DMSO'])
 
 # Normalization
-df.normalization()
+df.normalization(control_dict={'MS309': 'DMSO', 'MMP58': 'DMSO', 'MS306': 'DMSO', 'MMAE': 'DMSO'})
 
 
-# # Drop control samples
-# df.drop_control()
+# Drop control samples
+df.drop_control(control_names=['DMSO'])
 #
-# print(df.reshape())
+print(df.reshape())
 #
 # # # Export
 # path_to_export = "C:/Users/User/Documents/Work/Data/MTS/09.04.21_MTS"
